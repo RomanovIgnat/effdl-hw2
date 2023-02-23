@@ -33,7 +33,7 @@ class StaticScaler(Scaler):
 class DynamicScaler(Scaler):
     def __init__(
             self,
-            init_scale=65536 * 8,
+            init_scale=65536 * 4,
             growth_factor=2,
             backoff_factor=0.5,
             growth_interval=10
