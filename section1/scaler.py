@@ -65,7 +65,3 @@ class DynamicScaler(Scaler):
             self.init_scale *= self.growth_factor
             self.good_steps = 0
             print(f"grow scale {self.init_scale}")
-
-    @staticmethod
-    def _has_inf_or_nan(x):
-        return not torch.isfinite(x).all() or torch.isnan(x).any()

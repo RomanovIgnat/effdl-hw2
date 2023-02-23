@@ -7,7 +7,7 @@ from tqdm.auto import tqdm
 import click
 
 from unet import Unet
-from scaler import StaticScaler, DynamicScaler
+from scaler import StaticScaler # DynamicScaler
 
 from dataset import get_train_data
 
@@ -53,8 +53,8 @@ class LossScaler(abc.ABC):
         """Update self._loss_scale."""
 
 
-'''class DynamicScaler(LossScaler):
-    def __init__(self, init_scale=65536, grow_factor=2,
+class DynamicScaler(LossScaler):
+    def __init__(self, init_scale=65536 * 4, grow_factor=2,
                  shrink_factor=0.5, consecutive_steps=10):
         super().__init__(init_scale)
 
@@ -69,7 +69,7 @@ class LossScaler(abc.ABC):
         elif self.steps_since_last_inf_nan == self.consecutive_steps:
             print('grow')
             self._loss_scale *= self.grow_factor
-            self.steps_since_last_inf_nan = 0'''
+            self.steps_since_last_inf_nan = 0
 
 
 def train_epoch(train_loader, model, criterion, optimizer, scaler, device):
