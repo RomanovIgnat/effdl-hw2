@@ -12,8 +12,8 @@ from dataset import get_train_data
 def train_epoch(train_loader, model, criterion, optimizer, scaler, device):
     model.train()
 
-    pbar = tqdm(enumerate(train_loader), total=len(train_loader))
-    for i, (images, labels) in pbar:
+    #pbar = tqdm(enumerate(train_loader), total=len(train_loader))
+    for i, (images, labels) in enumerate(train_loader):
         images = images.to(device)
         labels = labels.to(device)
 
@@ -28,7 +28,8 @@ def train_epoch(train_loader, model, criterion, optimizer, scaler, device):
 
         accuracy = ((outputs > 0.5) == labels).float().mean()
 
-        pbar.set_description(f"Loss: {round(loss.item(), 4)} " f"Accuracy: {round(accuracy.item() * 100, 4)}")
+        print(f"Loss: {round(loss.item(), 4)} " f"Accuracy: {round(accuracy.item() * 100, 4)}")
+        #pbar.set_description(f"Loss: {round(loss.item(), 4)} " f"Accuracy: {round(accuracy.item() * 100, 4)}")
 
 
 @click.command()
