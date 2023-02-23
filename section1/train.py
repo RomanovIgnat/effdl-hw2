@@ -73,8 +73,10 @@ class DynamicScaler(LossScaler):
     def update(self):
         if self.steps_since_last_inf_nan == 0:
             self._loss_scale *= self.shrink_factor
+            print(f'reduce {self._loss_scale}')
         elif self.steps_since_last_inf_nan == self.consecutive_steps:
             self._loss_scale *= self.grow_factor
+            print(f'grow {self._loss_scale}')
 
 
 def train_epoch(train_loader, model, criterion, optimizer, scaler, device):
