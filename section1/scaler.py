@@ -57,8 +57,8 @@ class DynamicScaler(Scaler):
                 else:
                     param.grad /= self.init_scale
         self.good_steps += 1
-        optimizer.zero_grad()
         optimizer.step()
+        optimizer.zero_grad()
 
     def update(self):
         if self.good_steps == self.growth_interval:
