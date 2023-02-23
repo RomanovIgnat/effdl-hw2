@@ -48,14 +48,16 @@ class DynamicScaler(Scaler):
     def step(self, optimizer):
         for group in optimizer.param_groups:
             for param in group["params"]:
-                if self._has_inf_or_nan(param):
+                if not param.isfinite().all():
                     self.init_scale *= self.backoff_factor
                     print(f"reduce scale {self.init_scale}")
                     self.good_steps = 0
+                    optimizer.zero_grad()
                     return
                 else:
                     param.grad /= self.init_scale
         self.good_steps += 1
+        optimizer.zero_grad()
         optimizer.step()
 
     def update(self):
