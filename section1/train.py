@@ -73,7 +73,9 @@ class DynamicScaler(LossScaler):
     def update(self):
         if self.steps_since_last_inf_nan == 0:
             self._loss_scale *= self.shrink_factor
+            print('reduce')
         elif self.steps_since_last_inf_nan == self.consecutive_steps:
+            print('grow')
             self._loss_scale *= self.grow_factor
             self.steps_since_last_inf_nan = 0
 
