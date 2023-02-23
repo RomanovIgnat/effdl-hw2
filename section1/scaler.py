@@ -1,4 +1,5 @@
 from abc import ABC
+import torch
 
 
 class Scaler(ABC):
@@ -47,11 +48,10 @@ class DynamicScaler(Scaler):
     def step(self, optimizer):
         for group in optimizer.param_groups:
             for param in group["params"]:
-                if not param.isfinite().all():
+                if self._has_inf_or_nan(param):
                     self.init_scale *= self.backoff_factor
                     print(f"reduce scale {self.init_scale}")
                     self.good_steps = 0
-                    optimizer.zero_grad()
                     return
                 else:
                     param.grad /= self.init_scale
@@ -63,3 +63,7 @@ class DynamicScaler(Scaler):
             self.init_scale *= self.growth_factor
             self.good_steps = 0
             print(f"grow scale {self.init_scale}")
+
+    @staticmethod
+    def _has_inf_or_nan(x):
+        return not torch.isfinite(x).all() or torch.isnan(x).any()
