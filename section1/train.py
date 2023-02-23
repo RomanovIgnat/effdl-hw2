@@ -9,14 +9,7 @@ from scaler import StaticScaler, DynamicScaler
 from dataset import get_train_data
 
 
-def train_epoch(
-    train_loader: torch.utils.data.DataLoader,
-    model: torch.nn.Module,
-    criterion: torch.nn._Loss,
-    optimizer: torch.optim.Optimizer,
-    scaler,
-    device: torch.device,
-) -> None:
+def train_epoch(train_loader, model, criterion, optimizer, scaler, device):
     model.train()
 
     pbar = tqdm(enumerate(train_loader), total=len(train_loader))
