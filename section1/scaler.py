@@ -35,7 +35,7 @@ class DynamicScaler(Scaler):
             init_scale=65536,
             growth_factor=2,
             backoff_factor=0.5,
-            growth_interval=1
+            growth_interval=10
     ):
         super().__init__(init_scale)
         self.init_scale = init_scale
@@ -49,6 +49,7 @@ class DynamicScaler(Scaler):
             for param in group["params"]:
                 if not param.isfinite().all():
                     self.init_scale *= self.backoff_factor
+                    print(f"reduce scale {self.init_scale}")
                     self.good_steps = 0
                     return
                 else:
@@ -60,3 +61,4 @@ class DynamicScaler(Scaler):
         if self.good_steps == self.growth_interval:
             self.init_scale *= self.growth_factor
             self.good_steps = 0
+            print(f"grow scale {self.init_scale}")
