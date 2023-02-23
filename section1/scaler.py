@@ -51,11 +51,12 @@ class DynamicScaler(Scaler):
                     self.init_scale *= self.backoff_factor
                     print(f"reduce scale {self.init_scale}")
                     self.good_steps = 0
+                    optimizer.zero_grad()
                     return
                 else:
                     param.grad /= self.init_scale
-                    self.good_steps += 1
-                    optimizer.step()
+        self.good_steps += 1
+        optimizer.step()
 
     def update(self):
         if self.good_steps == self.growth_interval:
