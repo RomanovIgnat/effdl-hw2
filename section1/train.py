@@ -16,7 +16,7 @@ def train_epoch(train_loader, model, criterion, optimizer, scaler, device):
     model.train()
 
     pbar = tqdm(enumerate(train_loader), total=len(train_loader))
-    for i, (images, labels) in enumerate(train_loader):
+    for i, (images, labels) in pbar:
         images = images.to(device)
         labels = labels.to(device)
 
