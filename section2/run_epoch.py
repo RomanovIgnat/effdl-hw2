@@ -6,8 +6,8 @@ import torch
 import torch.nn as nn
 from tqdm import tqdm
 
-from section2.dataset import MAX_LENGTH
-from section2.transformer import PositionalEncoding, generate_square_subsequent_mask
+from dataset import MAX_LENGTH
+from transformer import PositionalEncoding, generate_square_subsequent_mask
 
 
 class DataMode(Enum):
