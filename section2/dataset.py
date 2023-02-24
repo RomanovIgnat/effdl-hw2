@@ -7,7 +7,7 @@ from torch.utils.data.dataset import Dataset
 
 
 MAX_LENGTH = 640
-MAX_NUM_SENTENCES = 10
+MAX_NUM_SENTENCES = 10000
 
 
 def preprocess_data(data_path):
